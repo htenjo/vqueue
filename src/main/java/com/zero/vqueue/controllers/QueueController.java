@@ -1,9 +1,11 @@
 package com.zero.vqueue.controllers;
 
 import com.zero.vqueue.services.ManagerService;
+import com.zero.vqueue.services.facades.amqp.models.EventNotification;
 import com.zero.vqueue.services.models.request.QueueRequest;
 import com.zero.vqueue.services.models.response.QueueResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,5 +28,8 @@ public class QueueController {
         return managerService.listAll();
     }
     
-//    public Flux<>
+    @GetMapping(value = "/queue/events", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<EventNotification> streamEvents() {
+        return managerService.streamEvents();
+    }
 }

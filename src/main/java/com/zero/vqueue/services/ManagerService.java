@@ -2,7 +2,7 @@ package com.zero.vqueue.services;
 
 import com.zero.vqueue.services.business.QueueService;
 import com.zero.vqueue.services.facades.amqp.NotificationService;
-import com.zero.vqueue.services.facades.amqp.models.EventType;
+import com.zero.vqueue.services.facades.amqp.models.EventNotification;
 import com.zero.vqueue.services.models.request.QueueRequest;
 import com.zero.vqueue.services.models.response.QueueResponse;
 import com.zero.vqueue.utils.LoggingUtils;
@@ -20,6 +20,7 @@ import static com.zero.vqueue.services.facades.amqp.models.EventType.CREATE_QUEU
 public class ManagerService {
     private final QueueService queueService;
     private final NotificationService notificationService;
+    private final StreamEventEmitter streamEventEmitter;
     
     public Mono<QueueResponse> createQueue(QueueRequest queueRequest) {
         return queueService.createQueue(queueRequest)
@@ -29,5 +30,13 @@ public class ManagerService {
     
     public Flux<QueueResponse> listAll() {
         return queueService.listAll();
+    }
+    
+    public void processEvent(EventNotification event) {
+        streamEventEmitter.emmitEvent(event);
+    }
+    
+    public Flux<EventNotification> streamEvents() {
+        return streamEventEmitter.buildStream();
     }
 }
