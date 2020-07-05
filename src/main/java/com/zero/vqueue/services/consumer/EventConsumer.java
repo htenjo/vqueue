@@ -2,6 +2,7 @@ package com.zero.vqueue.services.consumer;
 
 import com.zero.vqueue.services.ManagerService;
 import com.zero.vqueue.services.facades.amqp.models.EventNotification;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -15,8 +16,8 @@ public class EventConsumer {
     private final ManagerService managerService;
     
     @RabbitListener(queues = "${vqueue.amqp.eventQueueName}")
-    public void consumeEventMessage(@Payload EventNotification eventNotification) {
-        log.debug("Consuming new EventNotification [{}]", eventNotification);
+    public void consumeEventMessage(@Valid @Payload EventNotification eventNotification) {
+        log.info("::: Consuming new EventNotification [{}]", eventNotification);
         managerService.processEvent(eventNotification);
     }
 }

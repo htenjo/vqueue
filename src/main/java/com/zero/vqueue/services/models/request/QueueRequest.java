@@ -1,11 +1,20 @@
 package com.zero.vqueue.services.models.request;
 
 import java.time.LocalDate;
-import lombok.Value;
+import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
-@Value
+@Getter
+@Setter
 public class QueueRequest {
+    @NotNull
     private String name;
+    @NotNull
     private String description;
-    private LocalDate createdDated;
+    @NotNull
+    @DateTimeFormat(iso = ISO.DATE_TIME)
+    private LocalDate createdDate;
 }

@@ -19,9 +19,11 @@ public class StreamEventEmitter {
         stream = Flux.<EventNotification>create(sink -> sinkEmitter.set(sink))
                 .doOnSubscribe(subscription -> log.debug("::: Subscribing ... "))
                 .publish();
+        stream.connect();
     }
     
     public void emmitEvent(EventNotification eventNotification) {
+        log.info("::: Streaming event... ");
         sinkEmitter.get().next(eventNotification);
     }
     

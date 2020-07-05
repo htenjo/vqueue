@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Counter</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script>
+    function consumeData() {
+      let source = new EventSource("http://localhost:8080/queue/events");
+      source.addEventListener('message', function (e) {
+        let body = JSON.parse(e.data);
+        let node = document.createElement("LI");                 // Create a <li> node
+        let textnode = document.createTextNode(body.type + " - "+ body.payload);  // Create a text node
+        node.appendChild(textnode);                              // Append the text to <li>
+        document.getElementById("data").appendChild(node);     // Append <li> to <ul> with id="myList"
+      }, false);
+
+      return source;
+    }
+
+    $(document).ready(function () {
+      source = consumeData();
+    });
+  </script>
+</head>
+<body>
+Data:
+<div>
+  <ul id="data"></ul>
+</div>
+</body>
+</html>

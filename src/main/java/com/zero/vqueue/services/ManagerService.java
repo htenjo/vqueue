@@ -25,7 +25,10 @@ public class ManagerService {
     public Mono<QueueResponse> createQueue(QueueRequest queueRequest) {
         return queueService.createQueue(queueRequest)
                 .doOnError(error -> LoggingUtils.logError(log, queueRequest, error, "::: Error creating queue"))
-                .doOnSuccess(queueResponse -> notificationService.sendNotification(CREATE_QUEUE, queueResponse));
+                .doOnSuccess(response -> log.info("response = " + response))
+                .flatMap(queueResponse ->  notificationService.sendNotification(CREATE_QUEUE, queueResponse))
+                .doOnSuccess(response -> log.info("::: Notification OK"))
+                .doOnError(error -> log.info("::: Notification error [{}]", error));
     }
     
     public Flux<QueueResponse> listAll() {

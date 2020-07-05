@@ -1,0 +1,29 @@
+server:
+  port: ${HTTP_PORT:8080}
+
+spring:
+  application.name: VQueue
+  jackson:
+    default-property-inclusion: non_null
+    mapper.sort-properties-alphabetically: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    ssl.enabled: false
+    username: admin
+    password: admin
+    virtual-host: /
+    listener:
+      simple:
+        default-requeue-rejected: false
+
+vqueue:
+  amqp:
+    eventExchangeName: event-exchange
+    eventQueueName: event-queues
+
+  couchbase:
+    connectionString: ${COUCHBASE_HOSTS:localhost}
+    bucketName: ${COUCHBASE_BUCKET:bookmark}
+    userName: ${COUCHBASE_USERNAME:kids_club_user}
+    password: ${COUCHBASE_PASSWORD:kids_club_user_!n_2019}

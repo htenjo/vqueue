@@ -1,12 +1,16 @@
 package com.zero.vqueue.services.models.response;
 
 import java.time.LocalDate;
-import lombok.Value;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Value
+@Getter
+@Setter
+@ToString
 public class QueueResponse {
-    private Long id;
+    private String id;
     private String name;
     private String description;
-    private LocalDate createdDated;
+    private LocalDate createdDate;
 }
