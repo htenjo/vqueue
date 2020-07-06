@@ -3,6 +3,8 @@ server:
 
 spring:
   application.name: VQueue
+  rsocket.server:
+    port: 7000
   jackson:
     default-property-inclusion: non_null
     mapper.sort-properties-alphabetically: true
