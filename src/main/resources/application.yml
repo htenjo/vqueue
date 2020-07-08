@@ -4,16 +4,16 @@ server:
 spring:
   application.name: VQueue
   rsocket.server:
-    port: 7000
+    port: ${RSOCKET_SERVER_PORT:7000}
   jackson:
     default-property-inclusion: non_null
     mapper.sort-properties-alphabetically: true
   rabbitmq:
-    host: localhost
-    port: 5672
+    host: ${AMQP_SERVER:localhost}
+    port: ${AMQP_PORT:5672}
     ssl.enabled: false
-    username: admin
-    password: admin
+    username: ${AMQP_USERNAME:admin}
+    password: ${AMQP_PASSWORD:admin}
     virtual-host: /
     listener:
       simple:
@@ -26,6 +26,6 @@ vqueue:
 
   couchbase:
     connectionString: ${COUCHBASE_HOSTS:localhost}
-    bucketName: ${COUCHBASE_BUCKET:bookmark}
-    userName: ${COUCHBASE_USERNAME:kids_club_user}
-    password: ${COUCHBASE_PASSWORD:kids_club_user_!n_2019}
+    bucketName: ${COUCHBASE_BUCKET:queue_bucket}
+    userName: ${COUCHBASE_USERNAME:admin}
+    password: ${COUCHBASE_PASSWORD:admin}
